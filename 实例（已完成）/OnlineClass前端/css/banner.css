@@ -1,0 +1,30 @@
+#banner {
+    margin: 0 auto;
+    width: 980px;
+    height: 450px;
+    transform:scale(0.9);
+    border-radius: 10px;
+}
+
+#picture {
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.left {
+    float: left;
+    margin-left: -50px;
+}
+
+.right {
+    float: right;
+    margin-right: -50px;
+}
+
+.left,
+.right {
+    margin-top: -330px;
+    transform:scale(0.4);
+    opacity: 0.5;
+    cursor: pointer;
+}

@@ -1,0 +1,112 @@
+/* 信息栏 */
+#detailBox {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 具体内容 */
+#detail {
+    display: flex;
+    flex-direction: column;
+    height: 220px;
+    background-color: #4D555D;
+    color: white;
+    padding: 3% 15%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 标题 */
+#title {
+    font-weight: bolder;
+    font-size: 32px;
+}
+
+/* 价格 */
+#price {
+    color: #EFD393;
+    font-size: 28px;
+}
+
+/* 评分 */
+#point {
+    background-color: #575F65;
+    font-size: 18px;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+/* 标签页 */
+#choiceTab {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 35%;
+    margin: 20px 0;
+    color: #4D555D;
+    font-size: 20px;
+}
+
+.choiceItem {
+    padding: 5px 0;
+    border-bottom: white 3px solid;
+}
+
+.choiceItem:hover {
+    cursor: pointer;
+    border-bottom: #4D555D 3px solid;
+}
+
+.choiceItemActive{
+    padding: 5px 0;
+    border-bottom: #4D555D 3px solid;
+}
+
+
+/* 介绍图 */
+#summary{
+    text-align: center;
+    margin: auto;
+}
+
+/* 章节标题 */
+#chapter {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin: 15px 160px;
+    padding: 0 0 10px 0;
+}
+
+.chapter {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin: 15px 110px;
+    font-size: 22px;
+    border: solid 1px #ececec;
+    border-radius: 10px;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #FBFBFB;
+    padding: 15px 20px;
+    cursor: pointer;
+}
+
+.up, .down {
+    width: 20px;
+    height: 20px;
+    margin-left: auto;
+}
+
+.episode {
+    margin: 10px 30px;
+    font-size: 18px;
+    color: #4D555D;
+    background-color: white;
+    cursor: pointer;
+}

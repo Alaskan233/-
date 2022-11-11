@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小钟课堂</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="page" style="width: 10%; display: flex; flex-direction: column;">
+        <div id="title" v-show="titleShow">{{title}}</div>
+        <button type="submit" @click="changeTitleShow">这是标题按钮</button>
+
+        <div id="content" v-if="contentIf">{{content}}</div>
+        <button type="submit" @click="changeContentIf">这是内容按钮</button>
+
+        <div v-for="(item,i) in list">
+            <div>{{item.name}}</div>
+            <div>{{item.age}}</div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var vue = new Vue({
+        //挂载点
+        el: '#page',
+        //数据
+        data: {
+            title: '这是标题 title',
+            titleShow: true,
+            content: '这是内容 content',
+            contentIf: false,
+            list: [{
+                name: '钟昊宇',
+                age: 22
+            },{
+                name: 'XXX',
+                age: 25
+            }]
+        },
+        //方法
+        methods: {
+            changeTitleShow: function() {
+                this.titleShow = !this.titleShow  
+            },
+            changeContentIf: function() {
+                this.contentIf = !this.contentIf
+            }
+        }
+    })
+</script>
+</html>

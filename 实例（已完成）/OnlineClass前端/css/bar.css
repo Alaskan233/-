@@ -1,0 +1,179 @@
+body {
+    margin: 0 0;
+}
+
+#page {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 目录栏 */
+#bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    box-shadow:0 0 5px #bdbdbd;
+}
+
+/* 目录栏内容 */
+.barItem {
+    margin: 15px 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    color: #4D555E;
+}
+
+.barItem:hover {
+    color: #F49656;
+    cursor: pointer;
+}
+
+/* 登录按钮 */
+#openBtn {
+    color: #4D555E;
+}
+
+/* 注册按钮 */
+#registerBtn {
+    background-color: #4D555E;
+    color: white;
+}
+
+#userBox {
+    display: flex;
+    align-items: center;
+}
+
+/* 头像 */
+#head {
+    height: 40px;
+    width: 40px;
+    margin: 5px 5px 5px 15px;
+    padding: 0;
+    border-radius: 50%;
+}
+
+/* 用户名 */
+#name {
+    padding-left: 0;
+    font-size: 14px;
+}
+
+/* 下拉菜单 */
+#menu {
+    display: none;
+    position: absolute;
+    width: 120px;
+    background-color: white;
+    margin-top: 1px;
+    opacity: 0.95;
+    border-radius: 10px;
+    border: 1px solid #bdbdbd;
+    z-index: 999;
+}
+
+#userMenu:hover #menu {
+    display: block;
+}
+
+/* 目录栏 */
+.menuItem {
+    padding: 15px 0;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.menuItem:hover {
+    color: white;
+    background-color: #4D555D;
+    cursor: pointer;
+}
+
+/*模态框*/
+#box {
+    position: absolute;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+}
+
+#cover {
+    position: absolute;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background-color: #666666;
+    opacity: 0.9;
+    align-items: center;
+    z-index: 100;
+}
+ 
+/*模态框内容*/
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 120px;
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    opacity: 1;
+    border-radius: 20px; 
+    z-index: 200;
+}
+ 
+/*关闭按钮*/
+#closeBtn {
+    position: relative;
+    top: -10px;
+    right: -140px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    color: #aaa;
+    font-size: 40px;
+    font-weight: bolder;
+    display: inline-block;
+    line-height: 30px;
+}
+ 
+#closeBtn:hover {
+    color: black;
+    cursor: pointer;
+}
+ 
+/* 输入框 */
+#input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: #4D555D;
+}
+
+/* 输入内容 */
+.inputArea {
+    height: 20px;
+    margin: 20px 0 10px 0;
+    font-size: 16px;
+}
+
+/* 登录按钮 */
+#loginBtn {
+    width: 120px;
+    height: 30px;
+    margin-top: 20px;
+    font-size: 16px;
+    border-radius: 20px;
+    color: white;
+    background-color: #4D555D;
+    border: 0;
+}
+
+#loginBtn:hover {
+    cursor: pointer;
+}

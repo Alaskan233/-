@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小钟课堂-视频详情页</title>
+    <link rel="Shortcut Icon" href="128.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/bar.css">
+    <link rel="stylesheet" type="text/css" href="css/detail.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+</head>
+<body>
+    <div id="page">
+        <div id="loginBar">
+            <div id="cover"></div>
+            <div id="bar">
+                <div class="barItem" @click="toIndex">首页</div>
+                <div class="barItem">课程中心</div>
+                <div class="barItem">超级会员</div>
+                <div class="barItem">自学路线</div>
+                <div class="barItem">一对一辅导</div>
+                <div class="barItem" id="openBtn" v-if="!isLogin" @click="open">登录</div>
+                <div class="barItem" id="registerBtn" v-if="!isLogin">注册</div>
+                <div id="userMenu">
+                    <div id="userBox" >
+                        <img class="barItem" id="head" v-if="isLogin" :src="head" alt="">
+                        <div class="barItem" id="name" v-if="isLogin">{{name}}</div>                            
+                    </div>
+                    <div id="menu">
+                        <div class="menuItem">个人中心</div>
+                        <div class="menuItem" @click="logout">退出登录</div>
+                    </div>
+                </div>
+            </div>
+            <div id="box">
+                <div class="content" @keyup.enter="login">
+                    <div id="closeBtn" @click="close">×</div>
+                    <div id="input">
+                        <input class="inputArea" id="phone" placeholder="请输入手机号" type="text"></input>
+                        <input class="inputArea" id="password" placeholder="请输入密码" type="password"></input>
+                    </div>
+                    <button id="loginBtn" type="submit" @click="login">登录</button>
+                </div>
+            </div>
+        </div>
+        <div id="detailBox">
+            <div id="detail">
+                <div id="title">{{video.title}}</div>
+                <div id="price">优惠价：{{video.price}}元</div>
+                <div id="point">综合评分 {{video.point}}</div>
+            </div>     
+        </div>
+        <div id="choiceTab">
+            <div :class="[selectedTab==i?'choiceItemActive':'choiceItem']" id="introduction" 
+                v-for="(item,i) in tabList" @click="chooseTab(i)">{{item}}
+            </div>
+        </div>
+        <div v-if="selectedTab==0" style="display: flex;">
+            <img id="summary" :src="video.summary" alt="" />
+        </div>
+        <div id="chapter" v-if="selectedTab==1">
+            <div class="chapter" v-for="(chapter,indexC) in chapterList">
+                <div class="title" @click="chooseChapter(indexC)">
+                    <div>第 {{indexC+1}} 章 {{chapter.title}}</div>
+                    <img class="up" v-if='chapter.isOpen' :src="up" alt="" />
+                    <img class="down" v-if='!chapter.isOpen' :src="down" alt="" />
+                </div>
+                <div class="episode" v-for="(item,indexE) in chapter.episode" v-if="chapter.isOpen"
+                @click="toClass(item.play_url)">
+                    第 {{indexE+1}} 节 {{item.title}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var login = new Vue({
+        //挂载点
+        el: '#page',
+        //数据
+        data: {
+            isLogin: false,             //是否登录
+            head: '',                   //头像
+            name: '',                   //用户名
+
+            video: '',                  //视频信息
+            chapterList: [],            //章节列表
+            up: 'img/up.png',           //上箭头图片
+            down: 'img/down.png',       //下箭头图片
+
+            tabList: ['课程简介','课程目录'],
+            selectedTab: 0,             //被选中的标签
+            test:1234
+        },
+        mounted(){
+            this.tokenLogin();
+            this.getVedio();
+            this.getChapter();
+        },
+        //方法
+        methods: {
+            // 点击打开按钮隐藏模态框
+            open: function () {
+                document.getElementById('box').style.display = "block"
+                document.getElementById('cover').style.display = "block"
+            },
+            // 点击关闭按钮隐藏模态框
+            close: function () {
+                document.getElementById('box').style.display = "none"
+                document.getElementById('cover').style.display = "none"
+            },
+            // 登录
+            login: function(){
+                var that = this
+                if($('#phone').val().length == 0){
+                    alert("请输入账号")
+                } else if ($('#password').val().length == 0){
+                    alert("请输入密码")
+                } else {
+                    var inputData = {phone:$('#phone').val(),password:$('#password').val()}
+                    $.ajax({
+                        type:"POST",
+                        url:"http://127.0.0.1:9000/user/login/",
+                        contentType: false,
+                        processData: false,
+                        data: JSON.stringify(inputData),
+                        success:function(res){
+                            alert(res.message)
+                            that.close()
+                            that.isLogin = true
+                            that.head = res.data.head
+                            that.name = res.data.name
+                            $.cookie("token", res.data.token)
+                        }
+                    })
+                }
+            },
+            // token登录
+            tokenLogin: function(){
+                var that = this
+                var inputData = {token:$.cookie("token")}
+                $.ajax({
+                    type:"POST",
+                    url:"http://127.0.0.1:9000/user/token/",
+                    contentType: false,
+                    processData: false,
+                    data: JSON.stringify(inputData),
+                    success:function(res){
+                        if(res.code==200){
+                            that.isLogin = true
+                            that.head = res.data.head
+                            that.name = res.data.name
+                            $.cookie("token", res.data.token)
+                        }
+                    }
+                })
+            },
+            // 退出登录
+            logout: function(){
+                this.isLogin = false
+                $.removeCookie('token');
+            },
+            // 加载内容
+            getVedio: function(){
+                var that = this
+                var loc = location.href
+                var n1 = loc.split("?");        //取得=号的位置
+                var n2 = n1[1].split("=")       //取得数据
+                var inputData = {id: n2[1]}
+                $.ajax({
+                    type:"POST",
+                    url:"http://127.0.0.1:9000/video/detail/",
+                    contentType: false,
+                    processData: false,
+                    data: JSON.stringify(inputData),
+                    success:function(res){
+                        that.video = res.data
+                    }
+                })   
+            },
+            chooseTab: function(i){
+                this.selectedTab = i
+            },
+            // 获得章节列表
+            getChapter: function() {
+                var that = this
+                var loc = location.href
+                var n1 = loc.split("?");        //取得=号的位置
+                var n2 = n1[1].split("=")       //取得数据
+                var inputData = {id: n2[1]}
+                $.ajax({
+                    type:"POST",
+                    url:"http://127.0.0.1:9000/video/chapter/",
+                    contentType: false,
+                    processData: false,
+                    data: JSON.stringify(inputData),
+                    success:function(res){
+                        that.chapterList = res.data
+                        that.chapterList.forEach((chapter, index) => {
+                            chapter.isOpen = false
+                        });
+                    }
+                })
+            },
+            chooseChapter: function(i){
+                var chapterListTemp = this.chapterList
+                chapterListTemp[i].isOpen = !chapterListTemp[i].isOpen
+                this.chapterList = []
+                this.chapterList = chapterListTemp
+            },
+            toClass: function(url){
+                window.open(url, '_blank')
+            },
+            toIndex: function(){
+                location.assign('homepage.html')
+            }
+        }
+    })
+</script>
+</html>

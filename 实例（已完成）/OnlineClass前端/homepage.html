@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小钟课堂</title>
+    <link rel="Shortcut Icon" href="128.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/banner.css">
+    <link rel="stylesheet" type="text/css" href="css/bar.css">
+    <link rel="stylesheet" type="text/css" href="css/videoList.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+</head>
+<body>
+    <div id="page">
+        <div id="loginBar">
+            <div id="cover"></div>
+            <div id="bar">
+                <div class="barItem">首页</div>
+                <div class="barItem">课程中心</div>
+                <div class="barItem">超级会员</div>
+                <div class="barItem">自学路线</div>
+                <div class="barItem">一对一辅导</div>
+                <div class="barItem" id="openBtn" v-if="!isLogin" @click="open">登录</div>
+                <div class="barItem" id="registerBtn" v-if="!isLogin">注册</div>
+                <div id="userMenu">
+                    <div id="userBox" >
+                        <img class="barItem" id="head" v-if="isLogin" :src="head" alt="">
+                        <div class="barItem" id="name" v-if="isLogin">{{name}}</div>                            
+                    </div>
+                    <div id="menu">
+                        <div class="menuItem">个人中心</div>
+                        <div class="menuItem" @click="logout">退出登录</div>
+                    </div>
+                </div>
+            </div>
+            <div id="box">
+                <div class="content" @keyup.enter="login">
+                    <div id="closeBtn" @click="close">×</div>
+                    <div id="input">
+                        <input class="inputArea" id="phone" placeholder="请输入手机号" type="text"></input>
+                        <input class="inputArea" id="password" placeholder="请输入密码" type="password"></input>
+                    </div>
+                    <button id="loginBtn" type="submit" @click="login">登录</button>
+                </div>
+            </div>
+        </div>
+        <div id="banner" @click="getBanner">
+            <a :href="showUrl"> 
+                <img id="picture" :src="showPic" alt="" />   
+            </a>
+            <img class="left" v-show='showLeft' @click="prevHandler" :src="left" alt="" />
+            <img class="right" v-show='showRight' @click="nextHandler" :src="right" alt="" />
+        </div>
+        <div id="videoListTitle">🔥 热门课程</div>
+        <div id="videoList">
+            <div class="video" v-for="(item,i) in videoList" @click="toDetail(item.id)">
+                <div>
+                    <img class="coverImg" :src="item.cover_img" alt="" />
+                    <div class="title">{{item.title}}</div>
+                </div>
+                <div class="point_price">
+                    <div class="point">{{item.point}}</div>
+                    <div class="price">￥{{item.price}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var login = new Vue({
+        //挂载点
+        el: '#page',
+        //数据
+        data: {
+            showPic: '',                //展示图片
+            showUrl: '',                //展示链接
+            pic: [],                    //图片列表
+            showLeft: true,             //左箭头
+            showRight: true,            //右箭头
+            right: 'img/right.png',     //左箭头图片
+            left: 'img/left.png',       //右箭头图片
+            begin: 0,                   //图片起始编号
+            end: 0,                     //图片最终编号
+            idx: 0,                     //图片当前编号
+
+            isLogin: false,             //是否登录
+            head: '',                   //头像
+            name: '',                   //用户名
+
+            videoList: []               //视频列表
+        },
+        mounted(){
+            this.tokenLogin();
+            this.getBanner();
+            this.autoBanner();
+            this.getVideoList();
+        },
+        //方法
+        methods: {
+            // 获取轮播图
+            getBanner: function() {
+                var that = this
+                $.ajax({
+                    type:"POST",
+                    url:"http://127.0.0.1:9000/banner/",
+                    contentType: false,
+                    processData: false,
+                    success:function(res){
+                        that.pic = res.data
+                        that.showPic = that.pic[that.idx].img
+                        that.showUrl = that.pic[that.idx].url
+                        that.end = that.pic.length-1
+                    }
+                })
+            },
+            // 设置定时器
+            autoBanner: function() {
+                var that = this
+                let timer = setInterval(() => {
+                if (that.idx < that.end) {
+                    that.idx++
+                    that.showLeft = true;
+                    that.showRight = that.idx !== that.end        
+                } else {
+                    that.idx = 0
+                    that.showLeft = that.idx !== that.begin
+                    that.showRight = true
+                }
+                that.showPic = that.pic[that.idx].img
+                that.showUrl = that.pic[that.idx].url
+                }, 4000)
+            },
+            // 点击左箭头
+            prevHandler: function () {
+                if (this.idx > this.begin) {
+                    this.idx--
+                }
+                this.showLeft = this.idx !== this.begin
+                this.showRight = true
+                this.showPic = this.pic[this.idx].img
+                this.showUrl = this.pic[this.idx].url
+            },
+            // 点击右箭头
+            nextHandler: function () {
+                if (this.idx < this.end) {
+                    this.idx++
+                }
+                this.showLeft = true;
+                this.showRight = this.idx !== this.end
+                this.showPic = this.pic[this.idx].img
+                this.showUrl = this.pic[this.idx].url
+            },
+            // 获取视频列表
+            getVideoList: function() {
+                var that = this
+                $.ajax({
+                    type:"POST",
+                    url:"http://127.0.0.1:9000/video/list/",
+                    contentType: false,
+                    processData: false,
+                    success:function(res){
+                        that.videoList = res.data
+                    }
+                })
+            },
+            // 点击打开按钮隐藏模态框
+            open: function () {
+                document.getElementById('box').style.display = "block"
+                document.getElementById('cover').style.display = "block"
+            },
+            // 点击关闭按钮隐藏模态框
+            close: function () {
+                document.getElementById('box').style.display = "none"
+                document.getElementById('cover').style.display = "none"
+            },
+            // 登录
+            login: function(){
+                var that = this
+                if($('#phone').val().length == 0){
+                    alert("请输入账号")
+                } else if ($('#password').val().length == 0){
+                    alert("请输入密码")
+                } else {
+                    var inputData = {phone:$('#phone').val(),password:$('#password').val()}
+                    $.ajax({
+                        type:"POST",
+                        url:"http://127.0.0.1:9000/user/login/",
+                        contentType: false,
+                        processData: false,
+                        data: JSON.stringify(inputData),
+                        success:function(res){
+                            alert(res.message)
+                            that.close()
+                            that.isLogin = true
+                            that.head = res.data.head
+                            that.name = res.data.name
+                            $.cookie("token", res.data.token)
+                        }
+                    })
+                }
+            },
+            // token登录
+            tokenLogin: function(){
+                var that = this
+                var inputData = {token:$.cookie("token")}
+                $.ajax({
+                    type:"POST",
+                    url:"http://127.0.0.1:9000/user/token/",
+                    contentType: false,
+                    processData: false,
+                    data: JSON.stringify(inputData),
+                    success:function(res){
+                        if(res.code==200){
+                            that.isLogin = true
+                            that.head = res.data.head
+                            that.name = res.data.name
+                            $.cookie("token", res.data.token)
+                        }
+                    }
+                })
+            },
+            // 退出登录
+            logout: function(){
+                this.isLogin = false
+                $.removeCookie('token');
+            },
+            // 跳转到详情页
+            toDetail: function (videoId){
+                location.assign("detail.html?videoId="+videoId);
+            }
+        }
+    })
+</script>
+</html>

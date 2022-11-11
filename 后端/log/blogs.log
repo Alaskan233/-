@@ -1,0 +1,38 @@
+2022-10-17 15:39:08.979  INFO 16552 --- [restartedMain] c.example.onlineClass.BlogsApplication   : Starting BlogsApplication on DESKTOP-5N4DH9A with PID 16552 (C:\Users\xiaomi\Desktop\练手\后端\OnlineClass\target\classes started by xiaomi in C:\Users\xiaomi\Desktop\练手\后端\OnlineClass)
+2022-10-17 15:39:08.997  INFO 16552 --- [restartedMain] c.example.onlineClass.BlogsApplication   : No active profile set, falling back to default profiles: default
+2022-10-17 15:39:09.075  INFO 16552 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-10-17 15:39:09.076  INFO 16552 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-10-17 15:39:10.167  INFO 16552 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-10-17 15:39:10.188  INFO 16552 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9ms. Found 0 JPA repository interfaces.
+2022-10-17 15:39:10.309  WARN 16552 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.example.blogs.mapper]' package. Please check your configuration.
+2022-10-17 15:39:11.115  INFO 16552 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9000 (http)
+2022-10-17 15:39:11.132  INFO 16552 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-17 15:39:11.132  INFO 16552 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2022-10-17 15:39:11.299  INFO 16552 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-17 15:39:11.299  INFO 16552 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2222 ms
+2022-10-17 15:39:11.723  INFO 16552 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : study - Starting...
+2022-10-17 15:39:12.589  INFO 16552 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : study - Start completed.
+2022-10-17 15:39:12.633  INFO 16552 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-10-17 15:39:12.686  INFO 16552 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.25.Final
+2022-10-17 15:39:12.902  INFO 16552 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-10-17 15:39:13.074  INFO 16552 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-10-17 15:39:13.703  INFO 16552 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-10-17 15:39:13.713  INFO 16552 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-10-17 15:39:13.883  WARN 16552 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-10-17 15:39:14.022  INFO 16552 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-10-17 15:39:14.178  WARN 16552 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2022-10-17 15:39:14.198  INFO 16552 --- [restartedMain] t.m.m.autoconfigure.MapperCacheDisabler  : Clear tk.mybatis.mapper.util.MsUtil CLASS_CACHE cache.
+2022-10-17 15:39:14.198  INFO 16552 --- [restartedMain] t.m.m.autoconfigure.MapperCacheDisabler  : Clear tk.mybatis.mapper.genid.GenIdUtil CACHE cache.
+2022-10-17 15:39:14.199  INFO 16552 --- [restartedMain] t.m.m.autoconfigure.MapperCacheDisabler  : Clear tk.mybatis.mapper.version.VersionUtil CACHE cache.
+2022-10-17 15:39:14.200  INFO 16552 --- [restartedMain] t.m.m.autoconfigure.MapperCacheDisabler  : Clear EntityHelper entityTableMap cache.
+2022-10-17 15:39:14.466  INFO 16552 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-10-17 15:39:14.472  INFO 16552 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-10-17 15:39:14.538  INFO 16552 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9000 (http) with context path ''
+2022-10-17 15:39:14.554  INFO 16552 --- [restartedMain] c.example.onlineClass.BlogsApplication   : Started BlogsApplication in 6.106 seconds (JVM running for 8.014)
+2022-10-17 15:39:15.545  INFO 16552 --- [RMI TCP Connection(2)-10.190.1.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-17 15:39:15.546  INFO 16552 --- [RMI TCP Connection(2)-10.190.1.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-17 15:39:15.557  INFO 16552 --- [RMI TCP Connection(2)-10.190.1.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 11 ms
+2022-10-17 15:39:38.904  INFO 16552 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-10-17 15:39:38.906  INFO 16552 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-10-17 15:39:38.910  INFO 16552 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : study - Shutdown initiated...
+2022-10-17 15:39:38.921  INFO 16552 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : study - Shutdown completed.
